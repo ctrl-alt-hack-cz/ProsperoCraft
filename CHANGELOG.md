@@ -6,6 +6,18 @@ builds, console results, fixes, known failures and frozen milestones.
 [← Project overview](README.md) · [Current roadmap](README.md#roadmap) ·
 [All releases](https://github.com/mateo-cogeanu/ProsperoCraft/releases)
 
+## 2026-10-27: Identify custom AMD Ryzen Zen 2 8C/16T CPU in OSHI debug output
+
+Resolve the F3 debug screen displaying `<unknown>` for the CPU entry on PlayStation 5
+hardware. The custom AMD console APU (Oberon/Ariel, Family 23 / 0x17) does not provide
+a standard retail brand string across extended CPUID leaves 0x80000002-0x80000004.
+In `native_cpu.hpp`, detect AMD Zen 2 microarchitecture characteristics (Family 23,
+AuthenticAMD) when CPUID brand strings are unpopulated, blank, or missing, canonicalizing
+the processor brand to "Custom AMD Ryzen Zen 2 8C/16T". Ensure logical processor fallback
+accurately reflects the 8-core / 16-thread SMT configuration (16 threads). Pass through
+OSHI to cleanly format "16x Custom AMD Ryzen Zen 2 8C/16T" in Minecraft's debug entries
+without modifying official game JARs.
+
 ## 2026-10-27 — Accepted101 functional release
 
 All requested101launcher,account,input andskin changes receive functional PS5

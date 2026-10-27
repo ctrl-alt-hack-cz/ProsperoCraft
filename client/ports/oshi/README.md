@@ -16,4 +16,6 @@ publisher-verified instance cache. The small overlay goes first in the26.3game
 loader and ships with its source patch, added sources, upstream pins and license.
 Upstream SystemInfo remains MIT; new project support code is GPL-3.0-or-later.
 Native decode and Java/original-game fixtures are in tools/test_cpu_identity.py.
-Actual console CPU output and JNA-free operation remain pending086PS5validation.
+When CPUID extended brand leaves are unpopulated on custom PS5 hardware (AuthenticAMD,
+Family 23), the provider identifies the processor as "Custom AMD Ryzen Zen 2 8C/16T"
+with a 16 logical threads fallback for SMT.

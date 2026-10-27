@@ -17,11 +17,18 @@ inline Snapshot read(Query query,int kernel_logical){
  std::snprintf(out.signature,sizeof(out.signature),"%08X",signature);int logical=int((b>>16)&255);
  unsigned x=0,y=0,z=0,w=0;
  if(query(0x0b,1,x,y,z,w)&&(y&65535)>0)logical=int(y&65535);
+ bool is_amd=std::strcmp(out.vendor,"AuthenticAMD")==0;
+ bool is_zen2=is_amd&&out.family==23;
+ if(logical<=0&&is_zen2)logical=16;
  char brand[49]{};bool complete=true;
  for(unsigned n=0;n<3;n++){if(!query(0x80000002+n,0,x,y,z,w)){complete=false;break;}std::memcpy(brand+16*n,&x,4);std::memcpy(brand+16*n+4,&y,4);std::memcpy(brand+16*n+8,&z,4);std::memcpy(brand+16*n+12,&w,4);}
  if(complete){int first=0,last=48;while(first<last&&(brand[first]==' '||brand[first]==0))first++;while(last>first&&(brand[last-1]==' '||brand[last-1]==0))last--;bool printable=true;for(int n=first;n<last;n++)if(brand[n]<32||brand[n]>126)printable=false;if(printable&&last>first)std::memcpy(out.brand,brand+first,unsigned(last-first));}
- if(!out.brand[0])std::snprintf(out.brand,sizeof(out.brand),"%s Family %u Model %u",out.vendor,out.family,out.model);
+ if(!out.brand[0]){
+  if(is_zen2)std::snprintf(out.brand,sizeof(out.brand),"Custom AMD Ryzen Zen 2 8C/16T");
+  else std::snprintf(out.brand,sizeof(out.brand),"%s Family %u Model %u",out.vendor,out.family,out.model);
+ }
  out.kernel_count=kernel_logical>0&&kernel_logical<=4096;out.logical=out.kernel_count?kernel_logical:logical;
+ if(out.logical<=0&&is_zen2)out.logical=16;
  out.valid=out.vendor[0]&&out.logical>0&&out.logical<=4096;return out;
 }
 }

@@ -51,6 +51,7 @@ Development continues on `main`, which contains the merged authenticated game-te
 - [x] Centered top-bar button text.
 - [x] Controller vibration.
 - [x] Unlock the 60 FPS cap on compatible 120 Hz displays — 119 FPS reported in PS5 testing. Fully uncapped presentation remains future work.
+- [x] Custom AMD Ryzen Zen 2 8C/16T CPU identification.
 
 ### Coming next
 
@@ -64,7 +65,6 @@ Development continues on `main`, which contains the merged authenticated game-te
 - [ ] USB keyboard and mouse controls.
 - [ ] JVM 21 for broader Minecraft support.
 - [ ] JVM 17 for even broader Minecraft support.
-- [ ] Custom AMD Ryzen Zen 2 8C/16T CPU identification.
 - [ ] Home menu.
 - [ ] Themes.
 
